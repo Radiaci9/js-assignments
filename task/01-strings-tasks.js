@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+    return value1.concat(value2)
 }
 
 
@@ -38,7 +38,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    return value.length
 }
 
 /**
@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return 'Hello, ' + firstName + ' ' + lastName + '!'
 }
 
 /**
@@ -69,7 +69,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    return value.substring(7, value.length -1)
 }
 
 
@@ -84,7 +84,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+   return value.charAt(0)
 }
 
 /**
@@ -99,7 +99,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.trim()
 }
 
 /**
@@ -114,12 +114,12 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    return value.repeat(count)
 }
 
 /**
  * Remove the first occurrence of string inside another string
- * 
+ *
  * @param {string} str
  * @param {string} value
  * @return {string}
@@ -130,7 +130,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    return str.replace(value,'')
 }
 
 /**
@@ -145,7 +145,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    return str.substring(1,str.length-1)
 }
 
 
@@ -160,7 +160,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase()
 }
 
 /**
@@ -174,7 +174,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    return str.split(';')
 }
 
 /**
@@ -201,7 +201,26 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+  let s = ''
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++)
+      if( i == 0 && j == 0)
+        s += '┌'
+      else if( i == 0 && j ==  width -1)
+        s += '┐'
+        else if( i == height -1 && j == 0)
+          s += '└'
+          else if( i ==  height -1 && j == width -1)
+            s += '┘'
+            else if(j == 0 || j == width -1)
+              s+= '│'
+              else if(i == 0 || i == height -1)
+                s+= '─'
+              else
+                s+= ' '
+    s += '\n'
+  }
+  return s
 }
 
 
@@ -221,7 +240,29 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+let   res = ''
+let   charA = 'A'.charCodeAt(0)
+let   charZ = 'Z'.charCodeAt(0)
+let   chara = 'a'.charCodeAt(0)
+let   charz = 'z'.charCodeAt(0)
+
+  for(let i = 0; i < str.length; i++){
+    let char = str.charCodeAt(i)
+    if(charA <= char && char <= charZ)
+      if(char + 13 > 'Z'.charCodeAt(0))
+        res+=  String.fromCharCode(charA + 12 - (charZ - char))
+      else
+        res+=  String.fromCharCode(char+13)
+    else
+      if(chara <= char && char <= charz)
+        if(char + 13 > charz)
+          res+=  String.fromCharCode(chara + 12 - (charz - char))
+        else
+          res+=  String.fromCharCode(char+13)
+      else
+        res +=  str.charAt(i)
+  }
+  return res
 }
 
 /**
@@ -238,36 +279,90 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+  if (typeof(value) == "string")
+    return true
+  else if (value != null && typeof(value) == "object" && value.length> 0 && typeof(value[0]) == "string")
+      return true
+    else
+      return false
 }
 
 
 /**
  * Returns playid card id.
- * 
+ *
  * Playing cards inittial deck inclides the cards in the following order:
- * 
+ *
  *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
  *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
  *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
  *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
- * 
+ *
  * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
  * Function returns the zero-based index of specified card in the initial deck above.
- * 
+ *
  * @param {string} value
  * @return {number}
  *
  * @example
  *   'A♣' => 0
- *   '2♣' => 1 
+ *   '2♣' => 1
  *   '3♣' => 2
  *     ...
  *   'Q♠' => 50
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    let res = 0
+
+    switch (value.length == 2 ? value.charAt(0) : value.substring(0,value.length -1)) {
+      case '2':
+        res +=1
+        break
+      case '3':
+        res +=2
+        break
+      case '4':
+        res +=3
+        break
+      case '5':
+        res +=4
+        break
+      case '6':
+        res +=5
+        break
+      case '7':
+        res +=6
+        break
+      case '8':
+        res +=7
+        break
+      case '9':
+        res +=8
+        break
+      case '10':
+        res +=9
+        break
+      case 'J':
+        res +=10
+        break
+      case 'Q':
+        res +=11
+        break
+      case 'K':
+        res +=12
+    }
+    switch (value.charAt(value.length -1)) {
+      case '♦':
+        res += 13
+        break
+      case '♥':
+        res += 26
+        break
+      case '♠':
+        res += 39
+    }
+    return res
 }
 
 

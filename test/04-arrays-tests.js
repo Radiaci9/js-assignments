@@ -230,11 +230,10 @@ describe('04-arrays-tasks', function() {
                 index:    0,
                 expected: [ 'x', 1, 'b', 'c' ]
             }
-        ].forEach(data => {
-            tasks.insertItem(data.arr, data.item, data.index);
+        ].forEach(data => {            
             assert.deepEqual(
                 data.expected,
-                data.arr
+                tasks.insertItem(data.arr, data.item, data.index)
             );
         });
     });
