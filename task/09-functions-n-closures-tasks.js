@@ -148,7 +148,8 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    return (...arg) => {
+    return function(){
+      let arg = [...arguments]
       let argString = []
       arg.map(x => {
         let elString = ''
@@ -195,8 +196,8 @@ function logger(func, logFunc) {
  */
 function partialUsingArguments(fn, ...theArgs) {
     let arg = theArgs
-    return (...x) => {
-      arg = [...arg,...x]
+    return function(){
+      arg = [...arg,...arguments]
       return fn(arg[0],arg[1],arg[2],arg[3])
     }
 }
@@ -219,8 +220,7 @@ function partialUsingArguments(fn, ...theArgs) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    startFrom -= 1
-    return () => startFrom+=1
+    return () => startFrom++
 }
 
 

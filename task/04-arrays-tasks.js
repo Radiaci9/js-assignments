@@ -75,9 +75,7 @@ function doubleArray(arr) {
  *    [] => []
  */
 function getArrayOfPositives(arr) {
-  let res = []
-  arr.map(el => el > 0 ? res.push(el) : null)
-  return res
+  return arr.reduce((acc,el) => el > 0 ? acc = [...acc, el] : acc, [])
 }
 
 /**
@@ -92,9 +90,7 @@ function getArrayOfPositives(arr) {
  *    [ 'cat, 'dog', 'raccon' ] => [ 'cat', 'dog', 'racoon' ]
  */
 function getArrayOfStrings(arr) {
-  let res = []
-  arr.map(el => typeof(el) === 'string' ? res.push(el) : null)
-  return res
+  return arr.reduce((acc,el) => typeof(el) === 'string' ? acc = [...acc, el] : acc, [])
 }
 
 /**
@@ -111,9 +107,7 @@ function getArrayOfStrings(arr) {
  *    [ false, 0, NaN, '', undefined ]   => [ ]
  */
 function removeFalsyValues(arr) {
-   let res = []
-   arr.map(el => (new Boolean(el)) == true  ? res.push(el) : null)
-   return res
+  return arr.reduce((acc,el) => new Boolean(el) == true ? acc = [...acc, el] : acc, [])
 }
 
 /**
@@ -157,13 +151,7 @@ function getStringsLength(arr) {
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
 function insertItem(arr, item, index) {
-   let res = []
-   arr.map((el,i) =>{
-     if(i === index)
-      res.push(item)
-    res.push(el)
-   })
-   return res
+  return arr.reduce((acc,el,i) => i === index ? acc = [...acc,item,el] : acc = [...acc, el],[])
 }
 
 /**
@@ -217,9 +205,7 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-  let res = ''
-   arr.map((el, i) => res += (el.toString() + (i !== arr.length - 1 ? '\n' : '')))
-   return res
+  return arr.reduce((acc,el,i) => acc += (el.toString() + (i !== arr.length - 1 ? '\n' : '')),'')
 }
 
 /**
@@ -274,9 +260,7 @@ let funcRec = (arr,num) => {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-   let res = []
-   arr.map((el,i) => i%2 != 0 ? res.push(el) : null)
-   return res
+  return arr.reduce((acc,el,i) => i%2 != 0 ? acc = [...acc,el] : acc,[])
 }
 
 
@@ -334,9 +318,7 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  let res = 0
-  arr.map(e => typeof(e) === 'number' ? res = res > e ? res : e : null)
-  return res
+  return arr.reduce((acc,el) => typeof(el) === 'number' ? acc = acc > el ? acc : el : acc, 0)
 }
 
 /**
@@ -376,9 +358,7 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-   let res = 0
-   arr.map(e => res += e)
-   return res
+  return arr.reduce((acc,el) => acc+el, 0)
 }
 
 /**
@@ -394,9 +374,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-  let res = 0
-  arr.map(el => (new Boolean(el) != true  ? res += 1 : null))
-  return res
+  return arr.reduce((acc,el) => new Boolean(el) != true  ? acc +=1 : acc, 0)
 }
 
 /**
@@ -414,9 +392,7 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-  let res = 0
-  arr.map(x => x === item ? res++ : res)
-  return res
+  return arr.reduce((acc,el) => el === item ? acc+=1 : acc, 0)
 }
 
 /**
@@ -532,9 +508,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-  let res = []
-  arr.map( x => !res.includes(x) ? res.push(x) : null)
-  return res
+  return arr.reduce((acc,el) => !acc.includes(el) ? acc = [...acc,el] : acc,[])
 }
 
 /**
@@ -612,8 +586,8 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  indexes.map(e =>  arr = arr[e])
-    return  arr
+  indexes.map(e => arr = arr[e])
+  return arr
 }
 
 
