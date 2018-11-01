@@ -150,32 +150,12 @@ function retry(func, attempts) {
 function logger(func, logFunc) {
     return function(){
       let arg = [...arguments]
-      let argString = []
-      arg.map(x => {
-        let elString = ''
-        if(typeof x === 'object'){
-          elString += '['
-          for(let el in x){
-            if(typeof x[el] === 'string'){
-              elString += '\"'+ x[el] + '\"'
-            }
-            if(typeof x[el] === 'number'){
-              elString += x[el]
-            }
-            elString += ','
-          }
-          elString = elString.slice(0, elString.length - 1)
-          elString += ']'
-        }
-        else
-          elString = x
-        argString.push(elString)
-      })
-      let str = argString.reduce((acc,x) => acc += x + ',','')
-      str = str.slice(0, str.length-1)
-      logFunc(func.name + '('+ str + ')' + ' starts')
-      var result = func(arg[0],arg[1],arg[2],arg[3], ...arg)
-      logFunc(func.name + '('+ str +')' + ' ends')
+      let argString = JSON.stringify(arg)      
+      argString = argString.substr(1, argString.length - 2)
+      argString = `${func.name}(${argString})`
+      logFunc(argString + ' starts')
+      var result = func.apply(null,arg)
+      logFunc(argString + ' ends')
       return result
     }
 }
@@ -194,11 +174,12 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(fn, ...theArgs) {
-    let arg = theArgs
+function partialUsingArguments(fn) {
+    let arg = [...arguments]
+    arg.splice(0,1)
     return function(){
       arg = [...arg,...arguments]
-      return fn(arg[0],arg[1],arg[2],arg[3])
+      return fn.apply(null, arg);
     }
 }
 
