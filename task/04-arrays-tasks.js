@@ -23,9 +23,7 @@
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
 function findElement(arr, value) {
-   let res = -1
-   arr.map((e,i) => e === value ? res = i : null)
-   return res
+   return arr.indexOf(value)
 }
 
 /**
@@ -40,10 +38,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-  let res = []
-   for (var i = 0; i < len; i++)
-     res.push(i*2+ 1)
-   return res
+  return new Array(len).fill(1).map((el,i) => el+=i*2)
 }
 
 
@@ -508,7 +503,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-  return arr.reduce((acc,el) => !acc.includes(el) ? acc = [...acc,el] : acc,[])
+  return Array.from(new Set(arr))
 }
 
 /**
@@ -542,18 +537,12 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-
-  let arr1 = []
-  let arr2 = []
-  let arr3 = []
-  array.map(keySelector).map(e =>{
-    if(!arr1.includes(e)){
-      arr1.push(e)
-      arr3.push([e])
-    }})
-  array.map(valueSelector).map(e => arr2.push(e))
-  array.map(keySelector).map((e,i) => arr3[arr1.indexOf(e)].push(arr2[i]))
-  return arr3.map(el => [el[0], el.slice(1)])
+  var map = new Map()
+  array.map((x) =>
+  {
+    map.set(keySelector(x),(map.get(keySelector(x)) === undefined ? [] : map.get(keySelector(x))).concat([valueSelector(x)]))
+  })
+  return map
 }
 
 
